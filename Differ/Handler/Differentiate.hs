@@ -13,7 +13,7 @@ generatePoly = renderTable $ Poly
 derivative :: Poly -> String 
 derivative poly = 
             let things = L.filter (\x -> x=="+" || x=="-") $ L.map T.unpack $ parsePoly poly
-            in  showZip $ I.zip (L.map singleDer $ clean $ parsePoly poly) things
+            in  finalClean I.. showZip $ I.zip (L.map singleDer $ clean $ parsePoly poly) ("x":things)
 
 clean :: [Text] -> [Text]
 clean textList = L.filter (\x -> x /= T.empty && x /= T.pack "+" && x /= T.pack "-") $ L.map checkText textList
@@ -43,6 +43,9 @@ singleDer part =
 
 getEqu :: Poly -> Text
 getEqu (Poly equ) = equ
+
+finalClean :: String -> String
+finalClean string = L.reverse $ I.snd $ L.span (\x -> not $ C.isDigit x) $ L.reverse string
 
 getDifferentiateR :: Handler Html
 getDifferentiateR = do
