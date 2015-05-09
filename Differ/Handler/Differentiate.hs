@@ -13,7 +13,7 @@ generatePoly = renderTable $ Poly
 derivative :: Poly -> String 
 derivative poly = 
             let things = L.filter (\x -> x=="+" || x=="-") $ L.map T.unpack $ parsePoly poly
-            in  finalClean I.. showZip $ I.zip (L.map singleDer $ clean $ parsePoly poly) ("x":things)
+            in  finalClean I.. showZip $ I.zip (L.map singleDer $ clean $ parsePoly poly) ("":things)
 
 clean :: [Text] -> [Text]
 clean textList = L.filter (\x -> x /= T.empty && x /= T.pack "+" && x /= T.pack "-") $ L.map checkText textList
